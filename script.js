@@ -39,6 +39,8 @@ function create_frequency_table() {
 
 function get_word_cnt(content) {
 	content = content.trim();
+	content = content.replace(/[^a-zA-Z ]/g, '');
+
 	if (content === "") return 0;
 	const word_list = content.split(/\s+/);
 
