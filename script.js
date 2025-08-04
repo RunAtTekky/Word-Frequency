@@ -1,5 +1,6 @@
 const txt = document.getElementById('txt_input');
 const word_count = document.getElementById('word_cnt');
+const freq_table = document.getElementById(('word-container'))
 const word_freq_map = new Map();
 
 function find_frequency(word_list) {
@@ -17,6 +18,7 @@ function find_frequency(word_list) {
 }
 
 function create_frequency_table() {
+	freq_table.innerHTML = "";
 	const word_list = Array.from(word_freq_map.entries());
 
 	word_list.sort((a, b) => b[1] - a[1]);
@@ -24,9 +26,15 @@ function create_frequency_table() {
 	const wordsToDisplay = Math.min(10, word_list.length);
 
 	for (let i = 0; i < wordsToDisplay; i++) {
-		console.log(`${word_list[i][0]}: ${word_list[i][1]}`);
-	}
+		const word_ele = document.createElement('div');
+		word_ele.classList.add('word-freq');
 
+		const word = word_list[i][0];
+		const freq = word_list[i][1];
+		word_ele.innerHTML = `${word}: ${freq}`;
+
+		freq_table.appendChild(word_ele);
+	}
 }
 
 function get_word_cnt(content) {
