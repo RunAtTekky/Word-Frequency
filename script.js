@@ -26,11 +26,14 @@ function create_frequency_table() {
 	const wordsToDisplay = Math.min(10, word_list.length);
 
 	for (let i = 0; i < wordsToDisplay; i++) {
+		const word = word_list[i][0];
+		const freq = word_list[i][1];
+
+		if (word === '') continue;
+
 		const word_ele = document.createElement('div');
 		word_ele.classList.add('word-freq');
 
-		const word = word_list[i][0];
-		const freq = word_list[i][1];
 		word_ele.innerHTML = `${word}: ${freq}`;
 
 		freq_table.appendChild(word_ele);
@@ -39,9 +42,9 @@ function create_frequency_table() {
 
 function get_word_cnt(content) {
 	content = content.trim();
-	content = content.replace(/[^a-zA-Z ]/g, '');
+	content = content.replace(/[^a-zA-Z \n]/g, '');
 
-	if (content === "") return 0;
+	// if (content === "") return 0;
 	const word_list = content.split(/\s+/);
 
 	find_frequency(word_list);
@@ -52,7 +55,6 @@ function get_word_cnt(content) {
 
 function update_word_cnt() {
 	const cnt = get_word_cnt(txt.value);
-	console.log(cnt);
 	word_count.innerHTML = cnt;
 }
 
@@ -66,3 +68,4 @@ txt.addEventListener("keydown", (event) => {
 txt.addEventListener('input', () => {
 	update_word_cnt();
 });
+
