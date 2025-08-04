@@ -1,0 +1,24 @@
+* {
+	padding: 0;
+	margin: 0;
+	background-color: teal;
+}
+
+body {
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#txt_input {
+	font-size: 2rem;
+	height: 60vh;
+	width: 60vw;
+	background-color: white;
+}
+
+#word_cnt {
+	font-size: 4rem;
+}
