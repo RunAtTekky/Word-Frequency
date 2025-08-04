@@ -38,3 +38,15 @@ body {
 	align-items: center;
 	justify-content: center;
 }
+
+@media (max-width: 768px) {
+	body {
+		flex-direction: column;
+	}
+
+	#txt_input {
+		width: 90vw;
+		height: 60vh;
+		box-shadow: none;
+	}
+}
