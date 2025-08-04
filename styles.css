@@ -1,7 +1,6 @@
 * {
 	padding: 0;
 	margin: 0;
-	background-color: teal;
 }
 
 body {
@@ -10,15 +9,32 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	gap: 20px;
+	color: white;
+	background: linear-gradient(to bottom, #1a1a1a, #000000);
 }
 
 #txt_input {
+	padding: 10px;
+	border: none;
+	border-radius: 20px;
+	resize: none;
+	background-color: #666666;
+	box-shadow: 0 0 25px #007bff;
 	font-size: 2rem;
 	height: 60vh;
 	width: 60vw;
-	background-color: white;
+}
+
+#txt_input:focus {
+	outline: none;
 }
 
 #word_cnt {
+	height: 20vh;
+	aspect-ratio: 1/1;
 	font-size: 4rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
