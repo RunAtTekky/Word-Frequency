@@ -58,14 +58,40 @@ function update_word_cnt() {
 	word_count.innerHTML = cnt;
 }
 
+function get_data_from_backend() {
+	console.log("Fetching data from backend");
+	fetch('http://127.0.0.1:5000/analyze_text', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ text: txt.value })
+	})
+		.then(response => response.json())
+		.then(data => {
+			if (data.length === 0) {
+				console.log("No words found.")
+			} else {
+				data.forEach(item => {
+					console.log(`${item[0]}: ${item[1]}`)
+				});
+			}
+		})
+		.catch(error => {
+			console.error('Error:', error);
+		});
+}
+
 txt.addEventListener("keydown", (event) => {
 	if (event.key === "Enter" && event.ctrlKey) {
 		event.preventDefault();
 		update_word_cnt();
+		get_data_from_backend();
 	}
 });
 
 txt.addEventListener('input', () => {
 	update_word_cnt();
 });
+
 

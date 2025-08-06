@@ -1,12 +1,11 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS  # Import the CORS object
+from flask_cors import cross_origin
 from analyzer import get_stemmed_word_frequencies
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes and origins
 
-# Your route definition remains the same
 @app.route('/analyze_text', methods=['POST'])
+@cross_origin()
 def analyze_text():
     data = request.get_json()
     user_text = data.get('text', '')
