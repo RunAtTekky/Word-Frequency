@@ -3,6 +3,7 @@ const word_count = document.getElementById('word_cnt');
 const freq_table = document.getElementById(('word-container'))
 
 function create_frequency_table(word_list) {
+	word_count.innerHTML = `${word_list.length}`
 	freq_table.innerHTML = "";
 	word_list.sort((a, b) => b[1] - a[1]);
 	const wordsToDisplay = Math.min(10, word_list.length);
