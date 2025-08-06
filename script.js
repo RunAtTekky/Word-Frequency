@@ -1,28 +1,10 @@
 const txt = document.getElementById('txt_input');
 const word_count = document.getElementById('word_cnt');
 const freq_table = document.getElementById(('word-container'))
-const word_freq_map = new Map();
 
-function find_frequency(word_list) {
-	word_freq_map.clear();
-	for (let word of word_list) {
-		word = word.toLowerCase();
-
-		if (word_freq_map.has(word)) {
-			const sz = word_freq_map.get(word);
-			word_freq_map.set(word, sz + 1);
-		} else {
-			word_freq_map.set(word, 1);
-		}
-	}
-}
-
-function create_frequency_table() {
+function create_frequency_table(word_list) {
 	freq_table.innerHTML = "";
-	const word_list = Array.from(word_freq_map.entries());
-
 	word_list.sort((a, b) => b[1] - a[1]);
-
 	const wordsToDisplay = Math.min(10, word_list.length);
 
 	for (let i = 0; i < wordsToDisplay; i++) {
@@ -35,31 +17,15 @@ function create_frequency_table() {
 		word_ele.classList.add('word-freq');
 
 		word_ele.innerHTML = `${word}: ${freq}`;
+		// console.log(`${word}: ${freq}`);
 
 		freq_table.appendChild(word_ele);
 	}
 }
 
-function get_word_cnt(content) {
-	content = content.trim();
-	content = content.replace(/[^a-zA-Z \n]/g, '');
-
-	// if (content === "") return 0;
-	const word_list = content.split(/\s+/);
-
-	find_frequency(word_list);
-	create_frequency_table();
-
-	return word_list.length;
-}
-
-function update_word_cnt() {
-	const cnt = get_word_cnt(txt.value);
-	word_count.innerHTML = cnt;
-}
-
 function get_data_from_backend() {
-	console.log("Fetching data from backend");
+	const data_list = Array();
+	// console.log("Fetching data from backend");
 	fetch('http://127.0.0.1:5000/analyze_text', {
 		method: 'POST',
 		headers: {
@@ -70,28 +36,27 @@ function get_data_from_backend() {
 		.then(response => response.json())
 		.then(data => {
 			if (data.length === 0) {
-				console.log("No words found.")
+				// console.log("No words found.")
+				create_frequency_table(data);
 			} else {
-				data.forEach(item => {
-					console.log(`${item[0]}: ${item[1]}`)
-				});
+				create_frequency_table(data);
 			}
 		})
 		.catch(error => {
 			console.error('Error:', error);
 		});
+
+	return data_list;
 }
 
 txt.addEventListener("keydown", (event) => {
 	if (event.key === "Enter" && event.ctrlKey) {
 		event.preventDefault();
-		update_word_cnt();
 		get_data_from_backend();
 	}
 });
 
 txt.addEventListener('input', () => {
-	update_word_cnt();
+	get_data_from_backend();
 });
-
 
